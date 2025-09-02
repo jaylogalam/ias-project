@@ -2,7 +2,7 @@
     "files.exclude": {
         "package**": true,
         "README**": true,
-        // ".git**": true,
+        ".git**": true,
         "**.config**": true,
         "node_modules": true
     }
