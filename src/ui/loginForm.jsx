@@ -1,21 +1,19 @@
-import UsernameBox from "@/components/UsernameBox.jsx";
-import PasswordBox from "@/components/PasswordBox.jsx";
-import ClearButton from "@/components/ClearButton.jsx";
-import SubmitButton from "@/components/SubmitButton";
+import Textbox from "@/components/Textbox.jsx";
+import Button from "@/components/Buttons.jsx";
 
 function LoginForm() {
   return (
-    <div className="grid gap-8 border-black border-2 p-20 rounded-4xl">
+    <div className="grid gap-8 border-black border-2 px-20 py-12 rounded-4xl">
       {/* User input */}
       <div className="grid gap-4">
-        <UsernameBox label="Username" />
-        <PasswordBox label="Password" />
+        <Textbox.Username />
+        <Textbox.Password />
       </div>
 
       {/* Submit Button */}
       <div className="flex-1">
-        <ClearButton />
-        <SubmitButton />
+        <Button.Reset />
+        <Button.Login />
       </div>
     </div>
   );
