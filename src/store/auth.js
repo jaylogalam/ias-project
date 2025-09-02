@@ -1,6 +1,7 @@
 import { create } from "zustand";
+import crypto from "node:crypto";
 
-export const useLoginStore = create((set) => ({
+export const useAuthStore = create((set) => ({
   username: "",
   password: "",
   setUsername: (username) => set(() => ({ username: username })),
