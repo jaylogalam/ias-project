@@ -3,6 +3,7 @@
         "package**": true,
         "README**": true,
         // ".git**": true,
-        "**.config**": true
+        "**.config**": true,
+        "node_modules": true
     }
 }
