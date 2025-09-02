@@ -1,9 +1,10 @@
-import LoginForm from "./ui/loginForm";
+import Form from "./ui/Forms";
 
 function App() {
   return (
     <>
-      <LoginForm />
+      <Form.Login />
+      <Form.Register />
     </>
   );
 }

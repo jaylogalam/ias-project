@@ -1,42 +1,37 @@
-import { useLoginStore } from "@/data/store";
+import { useAuthStore } from "../store/auth";
 
-function Textbox() {
-  return <></>;
+function Textbox(props) {
+  return (
+    <div>
+      <input {...props} className="bg-gray-100 rounded-md w-full" />
+    </div>
+  );
 }
 
 Textbox.Username = (props) => {
-  const setUsername = useLoginStore((state) => state.setUsername);
+  const setUsername = useAuthStore((state) => state.setUsername);
 
   return (
-    <div>
-      <input
-        {...props}
-        name="username"
-        id="username"
-        type="text"
-        placeholder="Username"
-        className="bg-gray-100 rounded-md"
-        onChange={(e) => setUsername(e.target.value)}
-      />
-    </div>
+    <Textbox
+      {...props}
+      type="text"
+      placeholder="Username"
+      maxLength={16}
+      onChange={(e) => setUsername(e.target.value)}
+    />
   );
 };
 
 Textbox.Password = (props) => {
-  const setPassword = useLoginStore((state) => state.setPassword);
+  const setPassword = useAuthStore((state) => state.setPassword);
 
   return (
-    <div>
-      <input
-        {...props}
-        name="password"
-        id="password"
-        type="password"
-        placeholder="Password"
-        className="bg-gray-100 rounded-md"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-    </div>
+    <Textbox
+      {...props}
+      type="password"
+      placeholder="Password"
+      onChange={(e) => setPassword(e.target.value)}
+    />
   );
 };
 
