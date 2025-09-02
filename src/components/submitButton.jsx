@@ -1,5 +1,14 @@
 function SubmitButton() {
-    return <button>Submit</button>
+    const submit = () => {
+        
+    }
+
+    return <button
+        className="mx-2"
+        onClick={submit}
+    >
+        Submit
+    </button>
 }
 
 export default SubmitButton
