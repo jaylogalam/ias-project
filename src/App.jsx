@@ -1,4 +1,4 @@
-import Form from "./ui/Forms";
+import Form from "./features/auth/pages/Forms";
 
 function App() {
   return (

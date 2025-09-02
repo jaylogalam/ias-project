@@ -10,18 +10,7 @@ Button.Login = (props) => {
   const username = useAuthStore((state) => state.username);
   const password = useAuthStore((state) => state.password);
 
-  const handleLogin = async () => {
-    if (username in accounts) {
-      const hash = await hashPassword();
-      if (accounts[username] === hash) {
-        console.log("✅ Login successful");
-      } else {
-        console.log("❌ Wrong password");
-      }
-    } else {
-      console.log("❌ Username not found");
-    }
-  };
+  const handleLogin = () => {};
 
   return (
     <Button {...props} onClick={() => handleLogin()}>

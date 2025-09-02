@@ -1,5 +1,5 @@
-import Button from "../components/Buttons";
-import Textbox from "@/components/Textbox";
+import Button from "@/ui/components/Buttons";
+import Textbox from "@/ui/components/Textbox";
 
 function Form() {}
 
