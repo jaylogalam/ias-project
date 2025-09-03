@@ -52,7 +52,7 @@ function LoginFormFields() {
         </div>
         <div className="grid gap-3">
           <div className="flex items-center">
-            <Label htmlFor="password">Password</Label>
+            <Label>Password</Label>
           </div>
           <Input
             {...register("password")}
