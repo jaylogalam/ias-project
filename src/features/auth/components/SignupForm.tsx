@@ -13,6 +13,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from "../schema/authSchema";
+import { useSignupMutation } from "../server/fetch"
 
 export function SignupForm({
   className,
@@ -49,16 +50,23 @@ type FormFields = z.infer<typeof signupSchema>;
 SignupForm.Form = () => {
   const { register, handleSubmit, formState: {errors, isSubmitting}, setError } = useForm<FormFields>({resolver: zodResolver(signupSchema)});
   
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      console.log(data);
-    } catch (err) {
-      setError("username", {
-        message: "Username already exists"
-      })
-    }
-  }
+  const signupMutation = useSignupMutation();
+
+  const onSubmit: SubmitHandler<FormFields> = (data) => {
+    console.log(data)
+    signupMutation.mutate(data, {
+      onSuccess: (response) => {
+        console.log("✅ User registered:", response);
+        // you could redirect or show a success message here
+      },
+      onError: (err: any) => {
+        console.error(err);
+        setError("username", {
+          message: err.message || "Signup failed",
+        });
+      },
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
