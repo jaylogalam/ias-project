@@ -13,7 +13,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from "../schema/authSchema";
-import { useSignupMutation } from "../server/fetch"
+import { useSignupMutation } from "../server/useSignup"
 
 export function SignupForm({
   className,
