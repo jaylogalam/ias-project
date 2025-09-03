@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-export function useLoginMutation() {
+export function fetchLoginRequest() {
   return useMutation({
     mutationFn: loginRequest,
   });

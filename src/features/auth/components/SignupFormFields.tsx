@@ -5,13 +5,14 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from "../schema/authSchema";
-import { useSignupMutation } from "../server/useSignup"
+import { fetchSignupRequest } from "../server/fetchSignupRequest"
 import { useNavigate } from "react-router-dom"
 import { cn } from "@/utils/twMerge";
 
 type FormFields = z.infer<typeof signupSchema>;
 
 function SignupFormFields() {
+  const signupMutation = fetchSignupRequest();
   const navigate = useNavigate();
   const {
     register,
@@ -20,8 +21,7 @@ function SignupFormFields() {
     setError,
   } = useForm<FormFields>({ resolver: zodResolver(signupSchema) });
 
-  const signupMutation = useSignupMutation();
-
+  // Fetch request
   const onSubmit: SubmitHandler<FormFields> = (data) => {
     signupMutation.mutate(data, {
       onSuccess: () => {

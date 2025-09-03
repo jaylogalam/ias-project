@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-export function useSignupMutation() {
+export function fetchSignupRequest() {
   return useMutation({
     mutationFn: signupRequest,
   });

@@ -5,12 +5,13 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../schema/authSchema";
-import { useLoginMutation } from "../server/useLogin";
+import { fetchLoginRequest } from "../server/fetchLoginRequest";
 import { cn } from "@/utils/twMerge";
 
 type FormFields = z.infer<typeof loginSchema>;
 
 function LoginFormFields() {
+  const loginMutation = fetchLoginRequest();
   const {
     register,
     handleSubmit,
@@ -18,8 +19,7 @@ function LoginFormFields() {
     setError,
   } = useForm<FormFields>({ resolver: zodResolver(loginSchema) });
 
-  const loginMutation = useLoginMutation();
-
+  // Fetch request
   const onSubmit: SubmitHandler<FormFields> = (data) => {
     loginMutation.mutate(data, {
       onSuccess: () => {
