@@ -62,7 +62,7 @@ SignupForm.Form = () => {
       onError: (err: any) => {
         console.error(err);
         setError("username", {
-          message: err.message || "Signup failed",
+          message: err.message,
         });
       },
     });

@@ -20,7 +20,7 @@ export async function signupRequest(newUser: {
 
   if (!res.ok) {
     const error = await res.json();
-    throw new Error(error.message || "Signup failed");
+    throw new Error(error.message || "Username already taken");
   }
 
   return res.json();

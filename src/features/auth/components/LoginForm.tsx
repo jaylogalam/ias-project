@@ -60,7 +60,7 @@ LoginForm.Form = () => {
         // TODO: save token / redirect user
       },
       onError: (err: any) => {
-        setError("username", { message: err.message });
+        setError("password", { message: err.message });
       },
     });
   };
