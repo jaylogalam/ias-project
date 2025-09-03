@@ -1,9 +1,22 @@
 const db = require("../config/db");
-const crypto = require("crypto");
-const express = require("express");
-const router = express.Router();
+const { useHashPassword } = require("../utils/useHashPassword");
 
-router.post("/login", (req, res) => {
+// Signup
+exports.signup = (req, res) => {
+    const { username, password } = req.body;
+
+    // Hash password
+    const passwordHash = useHashPassword(password)
+
+    const sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)";
+    db.query(sql, [username, passwordHash], (err, result) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.status(201).json({ message: "User registered" });
+    });
+}
+
+// Login
+exports.login = (req, res) => {
   const { username, password } = req.body;
 
   const sqlUser = "SELECT * FROM users WHERE username = ?";
@@ -17,10 +30,7 @@ router.post("/login", (req, res) => {
     }
 
     // Check if password is correct
-    const passwordHash = crypto
-      .createHash("sha256")
-      .update(password)
-      .digest("hex");
+    const passwordHash = useHashPassword(password)
 
     const sql = "SELECT * FROM users WHERE username = ? AND password_hash = ?";
     db.query(sql, [username, passwordHash], (err, results) => {
@@ -32,6 +42,4 @@ router.post("/login", (req, res) => {
       }
     });
   });
-});
-
-module.exports = router;
+}
