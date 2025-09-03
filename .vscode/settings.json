@@ -4,7 +4,7 @@
         "README**": true,
         ".git**": true,
         "**.config**": true,
-        "node_modules": true,
+        "**/node_modules": true,
         "ts**": true,
         "components**": true,
     }
