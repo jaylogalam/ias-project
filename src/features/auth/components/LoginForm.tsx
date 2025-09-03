@@ -68,6 +68,7 @@ LoginForm.Form = () => {
           <Input
             {...register("username")}
             type="username"
+            maxLength={16}
             placeholder="Enter your username"
           />
           {errors.username && (
@@ -83,6 +84,7 @@ LoginForm.Form = () => {
           <Input
             {...register("password")}
             type="password"
+            maxLength={16}
             placeholder="**********************"
           />
           {errors.password && (
@@ -92,7 +94,11 @@ LoginForm.Form = () => {
           )}
         </div>
         <div className="flex flex-col gap-3">
-          <Button disabled={isSubmitting} type="submit" className={cn("w-full", isSubmitting && "bg-primary/90")}>
+          <Button
+            disabled={isSubmitting}
+            type="submit"
+            className={cn("w-full", isSubmitting && "bg-primary/90")}
+          >
             Login
           </Button>
         </div>
