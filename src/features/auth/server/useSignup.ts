@@ -6,21 +6,20 @@ export function useSignupMutation() {
   });
 }
 
-export async function signupRequest(newUser: {
+async function signupRequest(account: {
   username: string;
   password: string;
 }) {
   const res = await fetch("http://localhost:5000/api/signup", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newUser),
-  });
-    console.log(res);
-    
+    body: JSON.stringify(account),
+  });    
 
   if (!res.ok) {
     const error = await res.json();
-    throw new Error(error.message || "Username already taken");
+    if (error.error.includes("Duplicate")) throw new Error("Username already taken");
+    else throw new Error(error.error)
   }
 
   return res.json();
