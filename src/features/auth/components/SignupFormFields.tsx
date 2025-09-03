@@ -8,9 +8,9 @@ import { signupSchema } from "../schema/authSchema";
 import { fetchSignupRequest } from "../server/fetchSignupRequest"
 import { useNavigate } from "react-router-dom"
 import { cn } from "@/utils/twMerge";
-import zxcvbn from "zxcvbn";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import Eyes from "@/components/eyes";
 
 type FormFields = z.infer<typeof signupSchema>;
 
@@ -68,21 +68,8 @@ function SignupFormFields() {
             type={showPassword ? "text" : "password"}
             maxLength={16}
             placeholder="**********************"
-            onChange={(e) => passwordStrength(e)}
           />
-          {showPassword ? (
-            <Eye
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-9 text-gray-500"
-              size={18}
-            />
-          ) : (
-            <EyeOff
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-4 top-9 text-gray-500"
-              size={18}
-            />
-          )}
+          <Eyes state={showPassword} onClick={() => setShowPassword(!showPassword)}/>
           {errors.password && (
             <p className="px-3 mt-[-0.4rem] text-xs text-red-600">
               {errors.password.message}
