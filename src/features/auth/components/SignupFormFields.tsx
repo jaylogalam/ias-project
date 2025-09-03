@@ -8,10 +8,14 @@ import { signupSchema } from "../schema/authSchema";
 import { fetchSignupRequest } from "../server/fetchSignupRequest"
 import { useNavigate } from "react-router-dom"
 import { cn } from "@/utils/twMerge";
+import zxcvbn from "zxcvbn";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 type FormFields = z.infer<typeof signupSchema>;
 
 function SignupFormFields() {
+  const [showPassword, setShowPassword] = useState(false)
   const signupMutation = fetchSignupRequest();
   const navigate = useNavigate();
   const {
@@ -36,6 +40,8 @@ function SignupFormFields() {
     });
   };
 
+  // Check password strength
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-6">
@@ -53,16 +59,30 @@ function SignupFormFields() {
             </p>
           )}
         </div>
-        <div className="grid gap-3">
+        <div className="relative grid gap-3">
           <div className="flex items-center">
             <Label htmlFor="password">Password</Label>
           </div>
           <Input
             {...register("password")}
-            type="password"
+            type={showPassword ? "text" : "password"}
             maxLength={16}
             placeholder="**********************"
+            onChange={(e) => passwordStrength(e)}
           />
+          {showPassword ? (
+            <Eye
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-9 text-gray-500"
+              size={18}
+            />
+          ) : (
+            <EyeOff
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-9 text-gray-500"
+              size={18}
+            />
+          )}
           {errors.password && (
             <p className="px-3 mt-[-0.4rem] text-xs text-red-600">
               {errors.password.message}
