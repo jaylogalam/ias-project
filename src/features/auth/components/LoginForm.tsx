@@ -55,12 +55,13 @@ LoginForm.Form = () => {
   const onSubmit: SubmitHandler<FormFields> = (data) => {
     loginMutation.mutate(data, {
       onSuccess: (response) => {
-        console.log("✅ Logged in:", response);
+        // console.log("✅ Logged in:", response);
         alert("Login successful!");
         // TODO: save token / redirect user
       },
       onError: (err: any) => {
-        setError("password", { message: err.message });
+        if (err.message === "Incorrect password") setError("password", { message: err.message });
+        else setError("username", { message: err.message });
       },
     });
   };

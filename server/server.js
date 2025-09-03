@@ -45,21 +45,37 @@ app.post("/api/signup", async (req, res) => {
 // Login route
 app.post("/api/login", (req, res) => {
     const { username, password } = req.body;
-    const passwordHash = crypto
+
+    const sqlUser = "SELECT * FROM users WHERE username = ?";
+    db.query(sqlUser, [username], (err, results) => {
+      if (err) return res.status(500).json({ error: err.message });
+
+      // Check if username exist
+      if (results.length === 0) {
+        // username not found
+        return res.status(404).json({ message: "Username does not exist" });
+    }
+        
+      // Check if password is correct
+      const passwordHash = crypto
         .createHash("sha256")
         .update(password)
         .digest("hex");
-    
-    const sql = "SELECT * FROM users WHERE username = ? AND password_hash = ?";
-    db.query(sql, [username, passwordHash], (err, results) => {
-      if (err) return res.status(500).json({ error: err.message });
 
-      if (results.length > 0) {
-        res.json({ message: "✅ Login successful" });
-      } else {
-        res.status(401).json({ message: "Incorrect password" });
-      }
-    });
+      const sql =
+        "SELECT * FROM users WHERE username = ? AND password_hash = ?";
+      db.query(sql, [username, passwordHash], (err, results) => {
+        if (err) return res.status(500).json({ error: err.message });
+
+        if (results.length > 0) {
+          res.json({ message: "✅ Login successful" });
+        } else {
+          res.status(401).json({ message: "Incorrect password" });
+        }
+      });
+    })
+
+    
 });
 
 app.listen(5000, () => console.log("✅ Server running on port 5000"));
