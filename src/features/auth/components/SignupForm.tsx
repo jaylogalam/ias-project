@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/input"
 import { Label } from "@/components/label"
 
-export function LoginForm({
+export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
@@ -18,9 +18,9 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Login to your account</CardTitle>
+          <CardTitle className="text-2xl">Create a new account</CardTitle>
           <CardDescription>
-            Enter your username and password below to login to your account
+            Enter your username and password below to create an account
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -31,7 +31,7 @@ export function LoginForm({
                 <Input
                   id="username"
                   type="username"
-                  placeholder="Enter your username"
+                  placeholder="username"
                   required
                 />
               </div>
@@ -43,7 +43,7 @@ export function LoginForm({
               </div>
               <div className="flex flex-col gap-3">
                 <Button type="submit" className="w-full">
-                  Login
+                  Sign up
                 </Button>
                 {/* <Button variant="outline" className="w-full">
                   Login with Google
@@ -51,9 +51,9 @@ export function LoginForm({
               </div>
             </div>
             <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
-              <a href="signup" className="underline underline-offset-4">
-                Sign up
+              Already have an account?{" "}
+              <a href="/" className="underline underline-offset-4">
+                Log in
               </a>
             </div>
           </form>
