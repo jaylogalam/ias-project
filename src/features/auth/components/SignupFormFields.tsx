@@ -9,8 +9,8 @@ import { fetchSignupRequest } from "../server/fetchSignupRequest"
 import { useNavigate } from "react-router-dom"
 import { cn } from "@/utils/twMerge";
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
 import Eyes from "@/components/eyes";
+import PasswordErrors from "./PasswordRequirements";
 
 type FormFields = z.infer<typeof signupSchema>;
 
@@ -23,7 +23,10 @@ function SignupFormFields() {
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
-  } = useForm<FormFields>({ resolver: zodResolver(signupSchema) });
+  } = useForm<FormFields>({
+    resolver: zodResolver(signupSchema),
+    criteriaMode: "all",
+  });
 
   // Fetch request
   const onSubmit: SubmitHandler<FormFields> = (data) => {
@@ -39,8 +42,6 @@ function SignupFormFields() {
       },
     });
   };
-
-  // Check password strength
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -61,20 +62,17 @@ function SignupFormFields() {
         </div>
         <div className="relative grid gap-3">
           <div className="flex items-center">
-            <Label htmlFor="password">Password</Label>
+            <Label>Password</Label>
           </div>
           <Input
             {...register("password")}
             type={showPassword ? "text" : "password"}
             maxLength={16}
             placeholder="**********************"
+            className="relative"
           />
           <Eyes state={showPassword} onClick={() => setShowPassword(!showPassword)}/>
-          {errors.password && (
-            <p className="px-3 mt-[-0.4rem] text-xs text-red-600">
-              {errors.password.message}
-            </p>
-          )}
+          {errors.password && <PasswordErrors errors={errors.password.types} />}
         </div>
         <div className="flex flex-col gap-3">
           <Button
