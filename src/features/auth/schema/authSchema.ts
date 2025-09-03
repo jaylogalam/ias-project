@@ -9,7 +9,7 @@ export const signupSchema = z.object({
   password: z
     .string()
     .nonempty("Password cannot be blank")
-    .min(8, "Too short")
+    .min(8, "Password too short")
     .max(16)
     .regex(/[A-Z]/, "one uppercase letter")
     .regex(/[a-z]/, "one lowercase letter")
