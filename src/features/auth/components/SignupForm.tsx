@@ -14,6 +14,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from "../schema/authSchema";
 import { useSignupMutation } from "../server/useSignup"
+import { useNavigate } from "react-router-dom"
 
 export function SignupForm({
   className,
@@ -48,6 +49,7 @@ export function SignupForm({
 type FormFields = z.infer<typeof signupSchema>;
 
 SignupForm.Form = () => {
+  const navigate = useNavigate();
   const { register, handleSubmit, formState: {errors, isSubmitting}, setError } = useForm<FormFields>({resolver: zodResolver(signupSchema)});
   
   const signupMutation = useSignupMutation();
@@ -55,9 +57,9 @@ SignupForm.Form = () => {
   const onSubmit: SubmitHandler<FormFields> = (data) => {
     console.log(data)
     signupMutation.mutate(data, {
-      onSuccess: (response) => {
-        console.log("✅ User registered:", response);
-        // you could redirect or show a success message here
+      onSuccess: () => {
+        alert("Account created successfully")
+        navigate("/");
       },
       onError: (err: any) => {
         console.error(err);
@@ -107,7 +109,7 @@ SignupForm.Form = () => {
             type="submit"
             className={cn("w-full", isSubmitting && "bg-primary/90")}
           >
-            Login
+            Signup
           </Button>
         </div>
       </div>
