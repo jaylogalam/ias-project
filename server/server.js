@@ -57,7 +57,7 @@ app.post("/api/login", (req, res) => {
       if (results.length > 0) {
         res.json({ message: "✅ Login successful" });
       } else {
-        res.status(401).json({ message: "❌ Invalid credentials" });
+        res.status(401).json({ message: "Incorrect password" });
       }
     });
 });
