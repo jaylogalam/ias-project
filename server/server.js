@@ -1,9 +1,16 @@
 const express = require('express')
 const mysql = require('mysql2')
 const crypto = require('crypto')
+const cors = require('cors')
 
 const app = express();
-app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // frontend URL
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
+app.use(express.json())
 
 // Connect to DB
 const db = mysql.createConnection({
@@ -14,19 +21,22 @@ const db = mysql.createConnection({
 });
 
 // Signup route
-app.post("/api/register", async (req, res) => {
+app.post("/api/signup", async (req, res) => {
   const { username, password } = req.body;
 
   // Hash password
   const passwordHash = crypto
     .createHash("sha256")
     .update(password)
-        .digest("hex");
+    .digest("hex");
     
     const sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)";
-  db.query(sql, [username, hashedPassword],
+  db.query(sql, [username, passwordHash],
     (err, result) => {
-      if (err) return res.status(500).json({ error: err.message });
+        if (err) {
+            // console.error("❌ Database error:", err);   
+            return res.status(500).json({ error: err.message })
+        };
       res.status(201).json({ message: "User registered" });
     }
   );
