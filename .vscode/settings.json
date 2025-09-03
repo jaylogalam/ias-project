@@ -1,6 +1,6 @@
 {
     "files.exclude": {
-        "package**": true,
+        // "**/package**": true,
         "README**": true,
         ".git**": true,
         "**.config**": true,
