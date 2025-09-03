@@ -1,9 +1,9 @@
 {
     "files.exclude": {
-        "package**": true,
-        "README**": true,
-        ".git**": true,
-        "**.config**": true,
-        "node_modules": true
+        // "package**": true,
+        // "README**": true,
+        // ".git**": true,
+        // "**.config**": true,
+        // "node_modules": true
     }
 }
