@@ -13,6 +13,7 @@ import { useForm, type SubmitHandler } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { loginSchema } from "../schema/authSchema"
+import { useLoginMutation } from "../server/useLogin"
 
 export function LoginForm({
   className,
@@ -49,16 +50,20 @@ type FormFields = z.infer<typeof loginSchema>;
 LoginForm.Form = () => {
   const { register, handleSubmit, formState: {errors, isSubmitting}, setError } = useForm<FormFields>({resolver: zodResolver(loginSchema)});
   
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-      console.log(data);
-    } catch (err) {
-      setError("username", {
-        message: "Username already exists"
-      })
-    }
-  }
+  const loginMutation = useLoginMutation();
+
+  const onSubmit: SubmitHandler<FormFields> = (data) => {
+    loginMutation.mutate(data, {
+      onSuccess: (response) => {
+        console.log("✅ Logged in:", response);
+        alert("Login successful!");
+        // TODO: save token / redirect user
+      },
+      onError: (err: any) => {
+        setError("username", { message: err.message });
+      },
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
