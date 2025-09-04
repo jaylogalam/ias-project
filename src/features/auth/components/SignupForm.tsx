@@ -1,17 +1,14 @@
-import { cn } from "@/utils/twMerge"
+import { cn } from "@/utils/twMerge";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/card"
+} from "@/components/card";
 import SignupFormFields from "./SignupFormFields";
 
-function SignupForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+function SignupForm({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -38,4 +35,4 @@ function SignupForm({
   );
 }
 
-export default SignupForm
+export default SignupForm;
