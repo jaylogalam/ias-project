@@ -1,12 +1,12 @@
 import { Button } from "@/components/button";
-import { Input } from "@/components/input"
-import { Label } from "@/components/label"
+import { Input } from "@/components/input";
+import { Label } from "@/components/label";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from "../schema/authSchema";
-import { fetchSignupRequest } from "../server/fetchSignupRequest"
-import { useNavigate } from "react-router-dom"
+import { fetchSignupRequest } from "../server/fetchSignupRequest";
+import { useNavigate } from "react-router-dom";
 import { cn } from "@/utils/twMerge";
 import { useState } from "react";
 import Eyes from "@/components/eyes";
@@ -15,7 +15,7 @@ import PasswordErrors from "./PasswordRequirements";
 type FormFields = z.infer<typeof signupSchema>;
 
 function SignupFormFields() {
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
   const signupMutation = fetchSignupRequest();
   const navigate = useNavigate();
   const {
@@ -69,9 +69,11 @@ function SignupFormFields() {
             type={showPassword ? "text" : "password"}
             maxLength={16}
             placeholder="**********************"
-            className="relative"
           />
-          <Eyes state={showPassword} onClick={() => setShowPassword(!showPassword)}/>
+          <Eyes
+            state={showPassword}
+            onClick={() => setShowPassword(!showPassword)}
+          />
           {errors.password && <PasswordErrors errors={errors.password.types} />}
         </div>
         <div className="flex flex-col gap-3">
@@ -88,4 +90,4 @@ function SignupFormFields() {
   );
 }
 
-export default SignupFormFields
+export default SignupFormFields;
