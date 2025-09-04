@@ -59,7 +59,7 @@ function LoginFormFields() {
           </div>
           <Input
             {...register("password")}
-            type="password"
+            type={showPassword ? "text" : "password"}
             maxLength={16}
             placeholder="**********************"
           />
