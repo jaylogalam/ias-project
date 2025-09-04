@@ -18,6 +18,6 @@ export const signupSchema = z.object({
 });
 
 export const loginSchema = z.object({
-  username: z.string(),
+  username: z.string().nonempty("Invalid username"),
   password: z.string(),
 });
