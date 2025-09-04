@@ -7,10 +7,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../schema/authSchema";
 import { fetchLoginRequest } from "../server/fetchLoginRequest";
 import { cn } from "@/utils/twMerge";
+import Eyes from "@/components/eyes";
+import { useState } from "react";
 
 type FormFields = z.infer<typeof loginSchema>;
 
 function LoginFormFields() {
+  const [showPassword, setShowPassword] = useState(false);
   const loginMutation = fetchLoginRequest();
   const {
     register,
@@ -50,7 +53,7 @@ function LoginFormFields() {
             </p>
           )}
         </div>
-        <div className="grid gap-3">
+        <div className="relative grid gap-3">
           <div className="flex items-center">
             <Label>Password</Label>
           </div>
@@ -59,6 +62,10 @@ function LoginFormFields() {
             type="password"
             maxLength={16}
             placeholder="**********************"
+          />
+          <Eyes
+            state={showPassword}
+            onClick={() => setShowPassword(!showPassword)}
           />
           {errors.password && (
             <p className="px-3 mt-[-0.4rem] text-xs text-red-600">
@@ -78,6 +85,6 @@ function LoginFormFields() {
       </div>
     </form>
   );
-};
+}
 
-export default LoginFormFields
+export default LoginFormFields;
