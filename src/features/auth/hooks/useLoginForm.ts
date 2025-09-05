@@ -46,15 +46,19 @@ export function useLoginForm() {
     username: string;
     status: 0 | 1;
   }) => {
-    const res = await fetch("http://localhost:5000/api/setStatus", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: username, status: status }),
-    });
+    try {
+      const res = await fetch("http://localhost:5000/api/setStatus", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, status }),
+      });
 
-    if (!res.ok) {
-      const error = await res.json();
-      throw new Error(error.error);
+      if (!res.ok) {
+        const error = await res.json();
+        console.error("Failed to set account status:", error);
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -65,6 +69,38 @@ export function useLoginForm() {
       alert("Login successful!");
     },
     onError: (err: any) => {
+      switch (err.message) {
+        case "Username does not exist":
+          setError("username", {
+            message: "Username does not exist",
+          });
+          break; 
+        
+        case "Account is locked. Please try again later":
+          alert("Account locked. Please try again later.")
+          break;
+        
+        case "Incorrect password":
+          if (attemptsCount === 2) {
+            setError("password", {
+              message: "Too many attempts. Please try again later.",
+            });
+            const username = getValues("username");
+            setAccountStatus({ username: username, status: 1 });
+            setTimeout(async () => {
+              await setAccountStatus({ username: username, status: 0 });
+              setAttemptsCount(0);
+            }, 5000);
+          } else {
+            setAttemptsCount(attemptsCount + 1);
+            setError("password", { message: err.message });
+          }
+          break;
+
+        default:
+          console.log(err.message)
+      }
+
       // if (err.message === "Incorrect password") {
       //   if (attemptsCount === 2) {
       //     setError("password", {
@@ -89,6 +125,7 @@ export function useLoginForm() {
   // Submit form
   const onSubmit: SubmitHandler<FormFields> = (data) => {
     mutation.mutate(data);
+    
   };
 
   return {

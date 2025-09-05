@@ -6,7 +6,6 @@ type Props = {
 }
 
 function ErrorUsername({ errors }: Props) {
-    console.log(errors)
     if (!errors.username) return null
     
     return (
