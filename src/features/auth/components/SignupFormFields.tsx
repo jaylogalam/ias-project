@@ -11,6 +11,7 @@ import { cn } from "@/utils/twMerge";
 import { useState } from "react";
 import Eyes from "@/components/eyes";
 import PasswordErrors from "./PasswordRequirements";
+import useAuthForm from "../hooks/useAuthForm";
 
 type FormFields = z.infer<typeof signupSchema>;
 
@@ -23,10 +24,7 @@ function SignupFormFields() {
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
-  } = useForm<FormFields>({
-    resolver: zodResolver(signupSchema),
-    criteriaMode: "all",
-  });
+  } = useAuthForm();
 
   // Fetch request
   const onSubmit: SubmitHandler<FormFields> = (data) => {
