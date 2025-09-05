@@ -8,11 +8,14 @@ import { loginSchema } from "../schema/authSchema";
 import { fetchLoginRequest } from "../server/fetchLoginRequest";
 import { cn } from "@/utils/twMerge";
 import Eyes from "@/components/eyes";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 type FormFields = z.infer<typeof loginSchema>;
 
 function LoginFormFields() {
+  const passwordInput = useRef<HTMLInputElement>(null);
+  const [lockAccount, setLockAccount] = useState(false);
+  const [attempsCount, setAttemptsCount] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
   const loginMutation = fetchLoginRequest();
   const {
@@ -29,8 +32,19 @@ function LoginFormFields() {
         alert("Login successful!");
       },
       onError: (err: any) => {
-        if (err.message === "Incorrect password")
-          setError("password", { message: err.message });
+        if (err.message === "Incorrect password") {
+          if (attempsCount == 2) {
+            setError("password", { message: "Too many attempts. Please try again later." })
+            setLockAccount(!lockAccount);
+            setTimeout(() => {
+              setLockAccount(false);
+              if (passwordInput.current) passwordInput.current.value = ""
+            }, 3000);
+          } else {
+            setAttemptsCount(attempsCount+1)
+            setError("password", { message: err.message });
+          }
+        }
         else setError("username", { message: err.message });
       },
     });
@@ -59,9 +73,11 @@ function LoginFormFields() {
           </div>
           <Input
             {...register("password")}
+            ref={passwordInput}
             type={showPassword ? "text" : "password"}
             maxLength={16}
             placeholder="**********************"
+            disabled={lockAccount ? true : false}
           />
           <Eyes
             state={showPassword}
