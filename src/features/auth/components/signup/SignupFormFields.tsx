@@ -1,32 +1,16 @@
 import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
-import { type SubmitHandler } from "react-hook-form";
-import { z } from "zod";
-import { signupSchema } from "../../schema/authSchema";
 import { cn } from "@/utils/twMerge";
 import { useState } from "react";
 import Eyes from "@/components/eyes";
-import useAuthForm from "../../hooks/useAuthForm";
-import { useSignupRequest } from "../../hooks/useSignupRequest";
 import ErrorUsername from "./ErrorUsername";
 import ErrorPassword from "./ErrorPassword";
-
-type FormFields = z.infer<typeof signupSchema>;
+import useSignupForm from "../../hooks/useSignupForm";
 
 function SignupFormFields() {
   const [showPassword, setShowPassword] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    setError,
-  } = useAuthForm();
-
-  // Fetch request
-  const onSubmitHandler = useSignupRequest(setError);
-  const onSubmit: SubmitHandler<FormFields> = (data) =>
-    onSubmitHandler.mutate(data);
+  const { register, handleSubmit, errors, isSubmitting, onSubmit } = useSignupForm();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
