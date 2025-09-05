@@ -10,6 +10,8 @@ import Eyes from "@/components/eyes";
 import PasswordErrors from "./PasswordRequirements";
 import useAuthForm from "../../hooks/useAuthForm";
 import { useSignupRequest } from "../../hooks/useSignupRequest";
+import ErrorUsername from "./ErrorUsername";
+import ErrorPassword from "./ErrorPassword";
 
 type FormFields = z.infer<typeof signupSchema>;
 
@@ -38,11 +40,7 @@ function SignupFormFields() {
             maxLength={16}
             placeholder="Enter your username"
           />
-          {errors.username && (
-            <p className="px-3 mt-[-0.4rem] text-xs text-red-600">
-              {errors.username.message}
-            </p>
-          )}
+          <ErrorUsername errors={errors} />
         </div>
         <div className="relative grid gap-3">
           <div className="flex items-center">
@@ -58,7 +56,7 @@ function SignupFormFields() {
             state={showPassword}
             onClick={() => setShowPassword(!showPassword)}
           />
-          {errors.password && <PasswordErrors errors={errors.password.types} />}
+          <ErrorPassword errors={errors} />
         </div>
         <div className="flex flex-col gap-3">
           <Button

@@ -1,17 +1,17 @@
 function PasswordErrors(errors: any) {
-  const errorList = errors.errors.invalid_format;
-  const length = errors.errors.too_small;
+  const errorFormat = errors.errors.invalid_format;
+  const errorLength = errors.errors.too_small;
 
-  if (errorList)
+  if (errorFormat)
     return (
       <div>
         <p className="text-sm pb-1 text-red-600">Must contain the atleast: </p>
-        {showRequirements(errorList)}
+        {showRequirements(errorFormat)}
       </div>
     );
-  else if (length)
+  else if (errorLength)
     return (
-      <p className="px-3 py-1 mt-[-0.4rem] text-sm text-red-600">{length}</p>
+      <p className="px-3 py-1 mt-[-0.4rem] text-sm text-red-600">{errorLength}</p>
     );
 }
 
