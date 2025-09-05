@@ -8,7 +8,7 @@ exports.signup = (req, res) => {
     // Hash password
     const passwordHash = useHashPassword(password)
 
-    const sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)";
+    const sql = "INSERT INTO users (username, password) VALUES (?, ?)";
     db.query(sql, [username, passwordHash], (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
         res.status(201).json({ message: "User registered" });
@@ -32,7 +32,7 @@ exports.login = (req, res) => {
     // Check if password is correct
     const passwordHash = useHashPassword(password)
 
-    const sql = "SELECT * FROM users WHERE username = ? AND password_hash = ?";
+    const sql = "SELECT * FROM users WHERE username = ? AND password = ?";
     db.query(sql, [username, passwordHash], (err, results) => {
       if (err) return res.status(500).json({ error: err.message });
       if (results.length > 0) {
