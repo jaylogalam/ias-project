@@ -3,22 +3,18 @@ import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signupSchema } from "../schema/authSchema";
-import { fetchSignupRequest } from "../server/fetchSignupRequest";
-import { useNavigate } from "react-router-dom";
+import { signupSchema } from "../../schema/authSchema";
 import { cn } from "@/utils/twMerge";
 import { useState } from "react";
 import Eyes from "@/components/eyes";
-import PasswordErrors from "./PasswordRequirements";
-import useAuthForm from "../hooks/useAuthForm";
+import PasswordErrors from "../PasswordRequirements";
+import useAuthForm from "../../hooks/useAuthForm";
+import { useSignupRequest } from "../../hooks/useSignupRequest";
 
 type FormFields = z.infer<typeof signupSchema>;
 
 function SignupFormFields() {
   const [showPassword, setShowPassword] = useState(false);
-  const signupMutation = fetchSignupRequest();
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -27,19 +23,9 @@ function SignupFormFields() {
   } = useAuthForm();
 
   // Fetch request
-  const onSubmit: SubmitHandler<FormFields> = (data) => {
-    signupMutation.mutate(data, {
-      onSuccess: () => {
-        alert("Account created successfully");
-        navigate("/");
-      },
-      onError: (err: any) => {
-        setError("username", {
-          message: err.message,
-        });
-      },
-    });
-  };
+  const onSubmitHandler = useSignupRequest(setError);
+  const onSubmit: SubmitHandler<FormFields> = (data) =>
+    onSubmitHandler.mutate(data);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
