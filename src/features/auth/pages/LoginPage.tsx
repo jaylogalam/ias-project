@@ -1,11 +1,11 @@
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../components/login/LoginForm";
 
 function LoginPage() {
-    return (
-      <div className="w-1/6 min-w-96">
-        <LoginForm />
-      </div>
-    );
+  return (
+    <div className="w-1/6 min-w-96">
+      <LoginForm />
+    </div>
+  );
 }
 
-export default LoginPage
+export default LoginPage;

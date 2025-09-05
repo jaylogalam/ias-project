@@ -4,8 +4,8 @@ import { Label } from "@/components/label";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "../schema/authSchema";
-import { fetchLoginRequest } from "../server/fetchLoginRequest";
+import { loginSchema } from "../../schema/authSchema";
+import { fetchLoginRequest } from "../../server/fetchLoginRequest";
 import { cn } from "@/utils/twMerge";
 import Eyes from "@/components/eyes";
 import { useRef, useState } from "react";
@@ -34,18 +34,19 @@ function LoginFormFields() {
       onError: (err: any) => {
         if (err.message === "Incorrect password") {
           if (attempsCount == 2) {
-            setError("password", { message: "Too many attempts. Please try again later." })
+            setError("password", {
+              message: "Too many attempts. Please try again later.",
+            });
             setLockAccount(!lockAccount);
             setTimeout(() => {
               setLockAccount(false);
-              if (passwordInput.current) passwordInput.current.value = ""
+              if (passwordInput.current) passwordInput.current.value = "";
             }, 3000);
           } else {
-            setAttemptsCount(attempsCount+1)
+            setAttemptsCount(attempsCount + 1);
             setError("password", { message: err.message });
           }
-        }
-        else setError("username", { message: err.message });
+        } else setError("username", { message: err.message });
       },
     });
   };

@@ -7,7 +7,7 @@ import { signupSchema } from "../../schema/authSchema";
 import { cn } from "@/utils/twMerge";
 import { useState } from "react";
 import Eyes from "@/components/eyes";
-import PasswordErrors from "../PasswordRequirements";
+import PasswordErrors from "./PasswordRequirements";
 import useAuthForm from "../../hooks/useAuthForm";
 import { useSignupRequest } from "../../hooks/useSignupRequest";
 
