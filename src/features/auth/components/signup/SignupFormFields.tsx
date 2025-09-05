@@ -7,10 +7,11 @@ import Eyes from "@/components/eyes";
 import ErrorUsername from "./ErrorUsername";
 import ErrorPassword from "./ErrorPassword";
 import useSignupForm from "../../hooks/useSignupForm";
+import StrengthMeter from "./StrengthMeter";
 
 function SignupFormFields() {
   const [showPassword, setShowPassword] = useState(false);
-  const { register, handleSubmit, errors, isSubmitting, onSubmit } = useSignupForm();
+  const { register, handleSubmit, errors, isSubmitting, onSubmit, strength, checkStrength } = useSignupForm();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -29,12 +30,17 @@ function SignupFormFields() {
           <div className="flex items-center">
             <Label>Password</Label>
           </div>
-          <Input
-            {...register("password")}
-            type={showPassword ? "text" : "password"}
-            maxLength={16}
-            placeholder="**********************"
-          />
+          <div className="relative">
+            <Input
+              {...register("password", {
+                onChange: (e) => checkStrength(e.target.value),
+              })}
+              type={showPassword ? "text" : "password"}
+              maxLength={16}
+              placeholder="**********************"
+            />
+            <StrengthMeter strength={strength} error={errors} />
+          </div>
           <Eyes
             state={showPassword}
             onClick={() => setShowPassword(!showPassword)}
