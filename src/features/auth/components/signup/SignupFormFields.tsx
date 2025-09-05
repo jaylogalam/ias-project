@@ -1,13 +1,12 @@
 import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { signupSchema } from "../../schema/authSchema";
 import { cn } from "@/utils/twMerge";
 import { useState } from "react";
 import Eyes from "@/components/eyes";
-import PasswordErrors from "./PasswordRequirements";
 import useAuthForm from "../../hooks/useAuthForm";
 import { useSignupRequest } from "../../hooks/useSignupRequest";
 import ErrorUsername from "./ErrorUsername";

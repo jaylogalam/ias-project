@@ -12,10 +12,7 @@ ErrorPassword.List = ({errors}: {errors: MultipleFieldErrors | undefined}) => {
     if (!errors) return null;
 
     const errorFormat = errors.invalid_format;
-    console.log(errorFormat)
     const errorLength = errors.too_small;
-    console.log(errorLength);
-
 
     if (errorFormat)
     return (
