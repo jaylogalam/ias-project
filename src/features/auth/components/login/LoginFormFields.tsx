@@ -5,7 +5,7 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../../schema/authSchema";
-import { fetchLoginRequest } from "../../server/fetchLoginRequest";
+import { fetchLoginRequest } from "../../data/local/fetchLoginRequest";
 import { cn } from "@/utils/twMerge";
 import Eyes from "@/components/eyes";
 import { useRef, useState } from "react";
