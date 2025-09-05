@@ -100,25 +100,6 @@ export function useLoginForm() {
         default:
           console.log(err.message)
       }
-
-      // if (err.message === "Incorrect password") {
-      //   if (attemptsCount === 2) {
-      //     setError("password", {
-      //       message: "Too many attempts. Please try again later.",
-      //     });
-      //     const username = getValues("username");
-      //     setAccountStatus({ username: username, status: 1 });
-      //     setTimeout(() => {
-      //       setAccountStatus({ username: username, status: 0 });
-      //       setAttemptsCount(0);
-      //     }, 5000);
-      //   } else {
-      //     setAttemptsCount(attemptsCount + 1);
-      //     setError("password", { message: err.message });
-      //   }
-      // } else {
-      //   setError("username", { message: err.message });
-      // }
     },
   });
 
