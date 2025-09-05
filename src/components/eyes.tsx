@@ -4,7 +4,7 @@ type EyesProps = React.SVGProps<SVGSVGElement> & {
   state: boolean;
 };
 
-function Eyes({ state, ...props }: EyesProps) {
+function Eyes({ state, className, ...props }: EyesProps) {
     const style = "absolute right-4 top-9 text-gray-500";
     
     return state ? (
