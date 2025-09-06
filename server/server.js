@@ -17,14 +17,14 @@ app.use(
 app.use(express.json());
 
 // Serve static frontend build
-app.use(express.static(path.join(__dirname, "dist")));
+app.use(express.static(path.join(__dirname, "..", "dist")));
 
 // Auth route
 app.use("/api", authRoutes);
 
 // React Router fallback — send index.html for everything else
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html")); // adjust path if needed
+  res.sendFile(path.join(__dirname, "..", "dist", "index.html")); // adjust path if needed
 });
 
 // Port
