@@ -4,7 +4,7 @@ import useSignupForm from "../../hooks/useSignupForm";
 import Password from "@/components/password";
 import Username from "@/components/username";
 
-function SignupFormFields() {
+function RecoverFormFields() {
   const { register, handleSubmit, errors, isSubmitting, onSubmit } =
     useSignupForm();
 
@@ -30,4 +30,4 @@ function SignupFormFields() {
   );
 }
 
-export default SignupFormFields;
+export default RecoverFormFields;

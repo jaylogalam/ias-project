@@ -6,7 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/card";
-import RecoverFormFields from "./RecoverFormFields";
+import RecoverFormFields from "./RecoveryFormFields";
 
 function RecoverForm({ className, ...props }: React.ComponentProps<"div">) {
   return (
