@@ -36,8 +36,8 @@ function SignupFormFields() {
               type={showPassword ? "text" : "password"}
               maxLength={16}
               placeholder="**********************"
-            /> */}
-          {/* <ErrorPassword errors={errors} /> */}
+            />
+          <ErrorPassword errors={errors} /> */}
         </div>
         <div className="flex flex-col gap-3">
           <Button

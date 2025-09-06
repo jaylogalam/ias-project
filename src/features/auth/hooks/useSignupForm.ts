@@ -56,7 +56,6 @@ export default function useSignupForm() {
       navigate("/");
     },
     onError: (err: any) => {
-      console.log(err);
       setError("username", {
         message: err.message,
       });
