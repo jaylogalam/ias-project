@@ -15,7 +15,7 @@ function RecoverForm({ className, ...props }: React.ComponentProps<"div">) {
         <CardHeader>
           <CardTitle className="text-2xl">Recover your account</CardTitle>
           <CardDescription>
-            Enter a new password below to recover your account
+            Enter your username and new password below to recover your account
           </CardDescription>
         </CardHeader>
         <CardContent>

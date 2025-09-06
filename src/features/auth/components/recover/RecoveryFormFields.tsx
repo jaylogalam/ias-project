@@ -23,7 +23,7 @@ function RecoverFormFields() {
           type="submit"
           className={cn("w-full", isSubmitting && "bg-primary/90")}
         >
-          Signup
+          Change password
         </Button>
       </div>
     </form>
