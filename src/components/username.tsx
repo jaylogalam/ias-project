@@ -10,7 +10,7 @@ type Props = {
     errors: FieldErrors<AuthTypes>
 }
 
-export default function Username({ errors, type, register, disabled }: Props) {
+export default function Username({ errors, register, disabled }: Props) {
   return (
     <div className="grid gap-3">
       <Label>Username</Label>

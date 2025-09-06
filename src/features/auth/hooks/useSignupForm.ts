@@ -25,7 +25,6 @@ export default function useSignupForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
     setError,
-    setValue
   } = useForm<FormFields>({
     resolver: zodResolver(signupSchema),
     criteriaMode: "firstError",

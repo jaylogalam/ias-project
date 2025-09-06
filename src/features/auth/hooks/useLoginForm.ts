@@ -10,7 +10,6 @@ type FormFields = z.infer<typeof loginSchema>;
 
 export function useLoginForm() {
   const passwordInput = useRef<HTMLInputElement>(null);
-  const [lockAccount, setLockAccount] = useState(false);
   const [attemptsCount, setAttemptsCount] = useState(0);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -119,6 +118,5 @@ export function useLoginForm() {
     passwordInput,
     showPassword,
     setShowPassword,
-    lockAccount,
   };
 }
