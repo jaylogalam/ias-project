@@ -4,7 +4,7 @@ import { Label } from "./label";
 import type { AuthTypes } from "@/features/auth/schema/authTypes";
 
 type Props = {
-    type: "signup" | "login"
+    type: "signup" | "login" | "recovery"
     register: any
     disabled?: boolean
     errors: FieldErrors<AuthTypes>

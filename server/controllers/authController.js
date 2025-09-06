@@ -58,3 +58,35 @@ export const setStatus = async (req, res) => {
 
   res.json({ message: "Status updated" });
 };
+
+export const recovery = async (req, res) => {
+  const { username, password } = req.body;
+
+  // Look for username
+    const { data: users, errorNotFound } = await supabase
+      .from("users")
+      .select("*")
+      .eq("username", username)
+    .limit(1);
+  
+  if (errorNotFound) return res.status(500).json({ error: error.message });
+  
+    if (users.length === 0) {
+      return res.status(404).json({ message: "Username does not exist" });
+    }
+  
+  // Set new password
+  const passwordHash = useHashPassword(password);
+
+  const { error } = await supabase
+    .from("users")
+    .update([{ username, password: passwordHash }])
+    .eq("username", username);
+
+  if (error) {
+    console.error(error);
+    return res.status(500).json({ error: error.message });
+  }
+
+  res.status(200).json({ message: "Password updated successfully" });
+};

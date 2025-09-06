@@ -9,7 +9,7 @@ import type { FieldErrors } from "react-hook-form";
 import type { AuthTypes } from "@/features/auth/schema/authTypes";
 
 type Props = {
-  type: "signup" | "login";
+  type: "signup" | "login" | "recovery";
   register: any;
   disabled?: boolean
   errors: FieldErrors<AuthTypes>
@@ -112,7 +112,7 @@ export default function Password({ errors, type, register, disabled }: Props) {
     <div>
       {/* Password input field with toggle visibility button */}
       <div className="*:not-first:mt-2">
-        <Label htmlFor={id}>Password</Label>
+        <Label htmlFor={id}>{type === "recovery" ? "New password" : "Password"}</Label>
         <div className="relative">
           <Input
             {...register("password", {
