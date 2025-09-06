@@ -10,7 +10,7 @@ export const signup = async (req, res) => {
     .from("users")
     .insert([{ username, password: passwordHash, status: 0 }]);
 
-  if (error) return res.status(500).json({ error: error.message });
+  if (error) return res.status(500).json({ error: "Username already taken" });
   res.status(201).json({ message: "User registered" });
 };
 
