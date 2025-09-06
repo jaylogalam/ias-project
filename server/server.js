@@ -7,6 +7,7 @@ import authRoutes from "./routes/authRoute.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(
   cors({
@@ -16,17 +17,8 @@ app.use(
 );
 app.use(express.json());
 
-// Serve static frontend build
-app.use(express.static(path.join(__dirname, "..", "dist")));
-
 // Auth route
 app.use("/api", authRoutes);
 
-// React Router fallback — send index.html for everything else
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "dist", "index.html")); // adjust path if needed
-});
-
 // Port
-const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
