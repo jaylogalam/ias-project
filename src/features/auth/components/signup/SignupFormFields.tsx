@@ -8,6 +8,7 @@ import ErrorUsername from "./ErrorUsername";
 import ErrorPassword from "./ErrorPassword";
 import useSignupForm from "../../hooks/useSignupForm";
 import StrengthMeter from "./StrengthMeter";
+import Password from "@/components/password";
 
 function SignupFormFields() {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,25 +28,16 @@ function SignupFormFields() {
           <ErrorUsername errors={errors} />
         </div>
         <div className="relative grid gap-3">
-          <div className="flex items-center">
-            <Label>Password</Label>
-          </div>
-          <div className="relative">
-            <Input
+            <Password type="signup" register={register}/>
+            {/* <Input
               {...register("password", {
                 onChange: (e) => checkStrength(e.target.value),
               })}
               type={showPassword ? "text" : "password"}
               maxLength={16}
               placeholder="**********************"
-            />
-            <StrengthMeter strength={strength} error={errors} />
-          </div>
-          <Eyes
-            state={showPassword}
-            onClick={() => setShowPassword(!showPassword)}
-          />
-          <ErrorPassword errors={errors} />
+            /> */}
+          {/* <ErrorPassword errors={errors} /> */}
         </div>
         <div className="flex flex-col gap-3">
           <Button
