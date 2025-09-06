@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import zxcvbn from "zxcvbn";
 import { useState } from "react";
+import { API_HOST } from "@/app/config/server/apiHost";
 
 type FormFields = z.infer<typeof signupSchema>;
 
@@ -33,7 +34,7 @@ export default function useRecoveryForm() {
 
   // Fetch request
   const fetchSignupRequest = async (account: FormFields) => {
-    const res = await fetch("http://localhost:5000/api/recovery", {
+    const res = await fetch(`${API_HOST}/api/recovery`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(account),

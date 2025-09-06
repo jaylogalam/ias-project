@@ -5,6 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../schema/authSchema";
 import { useMutation } from "@tanstack/react-query";
+import { API_HOST } from "@/app/config/server/apiHost";
 
 type FormFields = z.infer<typeof loginSchema>;
 
@@ -25,7 +26,7 @@ export function useLoginForm() {
 
   // Fetch Request
   const fetchLoginRequest = async (account: FormFields) => {
-    const res = await fetch("http://localhost:5000/api/login", {
+    const res = await fetch(`${API_HOST}/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(account),
@@ -47,7 +48,7 @@ export function useLoginForm() {
     status: 0 | 1;
   }) => {
     try {
-      const res = await fetch("http://localhost:5000/api/setStatus", {
+      const res = await fetch(`${API_HOST}/api/setStatus`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, status }),
