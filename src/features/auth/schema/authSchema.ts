@@ -4,20 +4,20 @@ export const signupSchema = z.object({
   username: z
     .string()
     .nonempty("Username cannot be blank")
-    .min(5, "Too short")
+    .min(5, "Username too short")
     .max(16),
   password: z
     .string()
-    .nonempty("Password cannot be blank")
-    .min(8, "Password too short")
+    .nonempty()
+    .min(8)
     .max(16)
-    .regex(/[A-Z]/, "one uppercase letter")
-    .regex(/[a-z]/, "one lowercase letter")
-    .regex(/[0-9]/, "one number")
-    .regex(/[^A-Za-z0-9]/, "one special character"),
+    .regex(/[A-Z]/)
+    .regex(/[a-z]/)
+    .regex(/[0-9]/)
+    .regex(/[^A-Za-z0-9]/),
 });
 
 export const loginSchema = z.object({
-  username: z.string().nonempty("Invalid username"),
+  username: z.string(),
   password: z.string(),
 });

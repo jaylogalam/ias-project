@@ -28,7 +28,8 @@ export default function useSignupForm() {
     setValue
   } = useForm<FormFields>({
     resolver: zodResolver(signupSchema),
-    criteriaMode: "all",
+    criteriaMode: "firstError",
+    shouldFocusError: true
   });
 
   // Fetch request
@@ -66,7 +67,6 @@ export default function useSignupForm() {
   // Submit form
   const onSubmit: SubmitHandler<FormFields> = (data) => {
     mutation.mutate(data);
-    setValue("password", "");
 };
 
   return {

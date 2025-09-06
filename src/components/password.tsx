@@ -5,18 +5,69 @@ import { CheckIcon, EyeIcon, EyeOffIcon, XIcon } from "lucide-react";
 
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
+import type { FieldErrors } from "react-hook-form";
+import type { AuthTypes } from "@/features/auth/schema/authTypes";
 
 type Props = {
   type: "signup" | "login";
   register: any;
+  disabled?: boolean
+  errors: FieldErrors<AuthTypes>
 };
 
-export default function Password({ register }: Props) {
+export default function Password({ errors, type, register, disabled }: Props) {
   const id = useId();
   const [password, setPassword] = useState("");
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const toggleVisibility = () => setIsVisible((prevState) => !prevState);
+
+  if (type === "login")
+    return (
+      <div className="*:not-first:mt-2 mb-4">
+        <Label htmlFor={id}>Password</Label>
+        <div className="relative">
+          <Input
+            {...register("password", {
+              onChange: (e: any) => setPassword(e.target.value),
+            })}
+            id={id}
+            className="pe-9"
+            placeholder="Password"
+            type={isVisible ? "text" : "password"}
+            value={password}
+            disabled={disabled}
+            aria-describedby={`${id}-description`}
+            aria-invalid={errors.password ? true : false}
+          />
+          <button
+            className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+            type="button"
+            onClick={toggleVisibility}
+            aria-label={isVisible ? "Hide password" : "Show password"}
+            aria-pressed={isVisible}
+            aria-controls="password"
+          >
+            {isVisible ? (
+              <EyeOffIcon size={16} aria-hidden="true" />
+            ) : (
+              <EyeIcon size={16} aria-hidden="true" />
+            )}
+          </button>
+          <div className="absolute flex mb-2 w-full px-2 mt-2 ">
+            {errors.password && (
+              <p className="text-sm text-red-600">{errors.password.message}</p>
+            )}
+            <a
+              href="/recover"
+              className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
+            >
+              Forgot your password?
+            </a>
+          </div>
+        </div>
+      </div>
+    );
 
   const checkStrength = (pass: string) => {
     const requirements = [
@@ -24,6 +75,7 @@ export default function Password({ register }: Props) {
       { regex: /[0-9]/, text: "At least 1 number" },
       { regex: /[a-z]/, text: "At least 1 lowercase letter" },
       { regex: /[A-Z]/, text: "At least 1 uppercase letter" },
+      { regex: /[!@#$%^&*(),.?":{}|<>]/, text: "At least 1 special symbol" },
     ];
 
     return requirements.map((req) => ({
@@ -43,14 +95,17 @@ export default function Password({ register }: Props) {
     if (score <= 1) return "bg-red-500";
     if (score <= 2) return "bg-orange-500";
     if (score === 3) return "bg-amber-500";
-    return "bg-emerald-500";
+    if (score === 4) return "bg-emerald-500";
+
+    return "bg-emerald-600";
   };
 
   const getStrengthText = (score: number) => {
     if (score === 0) return "Enter a password";
-    if (score <= 2) return "Weak password";
-    if (score === 3) return "Medium password";
-    return "Strong password";
+    if (score <= 2) return "Weak";
+    if (score === 3) return "Medium";
+    if (score === 4) return "Strong"
+    return "Very strong";
   };
 
   return (
@@ -68,7 +123,9 @@ export default function Password({ register }: Props) {
             placeholder="Password"
             type={isVisible ? "text" : "password"}
             value={password}
+            disabled={disabled}
             aria-describedby={`${id}-description`}
+            aria-invalid={errors.password ? true : false}
           />
           <button
             className="text-muted-foreground/80 hover:text-foreground focus-visible:border-ring focus-visible:ring-ring/50 absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-md transition-[color,box-shadow] outline-none focus:z-10 focus-visible:ring-[3px] disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
@@ -100,7 +157,7 @@ export default function Password({ register }: Props) {
           className={`h-full ${getStrengthColor(
             strengthScore
           )} transition-all duration-500 ease-out`}
-          style={{ width: `${(strengthScore / 4) * 100}%` }}
+          style={{ width: `${(strengthScore / 5) * 100}%` }}
         ></div>
       </div>
 

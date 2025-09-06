@@ -1,28 +1,33 @@
 import { Button } from "@/components/button";
 import { cn } from "@/utils/twMerge";
-import { useLoginForm } from "../../hooks/useLoginForm";
+import useSignupForm from "../../hooks/useSignupForm";
 import Password from "@/components/password";
 import Username from "@/components/username";
 
-function LoginFormFields() {
+function SignupFormFields() {
   const { register, handleSubmit, errors, isSubmitting, onSubmit } =
-    useLoginForm();
+    useSignupForm();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col gap-6">
-        <Username type="login" register={register} errors={errors} />
-        <Password type="login" register={register} errors={errors} />
+        <Username type="signup" register={register} errors={errors} />
+        <Password
+          errors={errors}
+          disabled={isSubmitting}
+          type="signup"
+          register={register}
+        />
         <Button
           disabled={isSubmitting}
           type="submit"
           className={cn("w-full", isSubmitting && "bg-primary/90")}
         >
-          Login
+          Signup
         </Button>
       </div>
     </form>
   );
 }
 
-export default LoginFormFields;
+export default SignupFormFields;
