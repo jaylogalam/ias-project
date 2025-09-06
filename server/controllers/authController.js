@@ -32,7 +32,7 @@ export const login = async (req, res) => {
 
   const user = users[0];
 
-  if (user.status === 1) {
+  if (user.status === true) {
     return res
       .status(423)
       .json({ message: "Account is locked. Please try again later" });

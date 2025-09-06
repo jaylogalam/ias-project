@@ -21,6 +21,7 @@ export function useLoginForm() {
     formState: { errors, isSubmitting },
     setError,
     getValues,
+    setValue,
   } = useForm<FormFields>({ resolver: zodResolver(loginSchema) });
 
   // Fetch Request
@@ -83,7 +84,7 @@ export function useLoginForm() {
         case "Incorrect password":
           if (attemptsCount === 2) {
             setError("password", {
-              message: "Too many attempts. Please try again later.",
+              message: err.message,
             });
             const username = getValues("username");
             setAccountStatus({ username: username, status: 1 });
@@ -106,7 +107,7 @@ export function useLoginForm() {
   // Submit form
   const onSubmit: SubmitHandler<FormFields> = (data) => {
     mutation.mutate(data);
-    
+    setValue("password", "")
   };
 
   return {
