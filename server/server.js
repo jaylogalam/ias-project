@@ -1,5 +1,6 @@
-const express = require('express')
-const cors = require('cors')
+import express from "express";
+import cors from "cors";
+import authRoutes from "./routes/authRoute.js";
 
 const app = express();
 app.use(
@@ -8,10 +9,9 @@ app.use(
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
-app.use(express.json())
+app.use(express.json());
 
 // Auth route
-const authRoutes = require("./routes/authRoute")
 app.use("/api", authRoutes);
 
 // Port

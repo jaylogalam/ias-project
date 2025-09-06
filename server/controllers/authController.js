@@ -1,60 +1,60 @@
-const db = require("../config/db");
-const { useHashPassword } = require("../utils/useHashPassword");
+import supabase from "../config/db.js";
+import { useHashPassword } from "../utils/useHashPassword.js";
 
 // Signup
-exports.signup = (req, res) => {
+export const signup = async (req, res) => {
   const { username, password } = req.body;
-
-  // Hash password
   const passwordHash = useHashPassword(password);
 
-  const sql = "INSERT INTO users (username, password) VALUES (?, ?)";
-  db.query(sql, [username, passwordHash], (err, result) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.status(201).json({ message: "User registered" });
-  });
+  const { error } = await supabase
+    .from("users")
+    .insert([{ username, password: passwordHash, status: 0 }]);
+
+  if (error) return res.status(500).json({ error: err.message });
+  res.status(201).json({ message: "User registered" });
 };
 
 // Login
-exports.login = (req, res) => {
+export const login = async (req, res) => {
   const { username, password } = req.body;
 
-  const sqlUser = "SELECT * FROM users WHERE username = ?";
-  db.query(sqlUser, [username], (err, results) => {
-    // Generic error
-    if (err) return res.status(500).json({ error: err.message });
+  const { data: users, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("username", username)
+    .limit(1);
 
-    // Check if username exist
-    if (results.length === 0) {
-      return res.status(404).json({ message: "Username does not exist" });
-    }
+  if (error) return res.status(500).json({ error: error.message });
 
-    // Check if account is locked
-    const user = results[0]
+  if (users.length === 0) {
+    return res.status(404).json({ message: "Username does not exist" });
+  }
 
-    if (user.status === 1) {
-      return res
-        .status(423)
-        .json({ message: "Account is locked. Please try again later" });
-    }
+  const user = users[0];
 
-    // Check if password is correct
-    const passwordHash = useHashPassword(password);
-    if (user.password !== passwordHash) {
-      return res.status(401).json({ message: "Incorrect password" });
-    }
+  if (user.status === 1) {
+    return res
+      .status(423)
+      .json({ message: "Account is locked. Please try again later" });
+  }
 
-    // Success
-    res.json({ message: "Login successful" });
-  });
+  const passwordHash = useHashPassword(password);
+  if (user.password !== passwordHash) {
+    return res.status(401).json({ message: "Incorrect password" });
+  }
+
+  res.json({ message: "Login successful" });
 };
 
-exports.setStatus = (req, res) => {
+export const setStatus = async (req, res) => {
   const { username, status } = req.body;
 
-  const sql = "UPDATE users SET status = ? WHERE username = ?";
-  db.query(sql, [status, username], (err, results) => {
-    // Generic error
-    if (err) return res.status(500).json({ error: err.message });
-  });
+  const { error } = await supabase
+    .from("users")
+    .update({ status })
+    .eq("username", username);
+
+  if (error) return res.status(500).json({ error: error.message });
+
+  res.json({ message: "Status updated" });
 };
