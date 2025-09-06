@@ -59,7 +59,7 @@ export default function Password({ errors, type, register, disabled }: Props) {
               <p className="text-sm text-red-600">{errors.password.message}</p>
             )}
             <a
-              href="/recover"
+              href="/recovery"
               className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
             >
               Forgot your password?
