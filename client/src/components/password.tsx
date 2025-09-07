@@ -75,7 +75,7 @@ export default function Password({ errors, type, register, disabled }: Props) {
       { regex: /[0-9]/, text: "At least 1 number" },
       { regex: /[a-z]/, text: "At least 1 lowercase letter" },
       { regex: /[A-Z]/, text: "At least 1 uppercase letter" },
-      { regex: /[!@#$%^&*(),.?":{}|<>]/, text: "At least 1 special symbol" },
+      { regex: /[!@#$%^&*(),.?":{}|<>`~]/, text: "At least 1 special symbol" },
     ];
 
     return requirements.map((req) => ({
