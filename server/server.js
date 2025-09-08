@@ -2,11 +2,11 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/authRoute.js";
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 const app = express();
 app.use(
   cors({
-    origin: "https://ias-project-pj81.onrender.com",
+    origin: process.env.CLIENT_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
