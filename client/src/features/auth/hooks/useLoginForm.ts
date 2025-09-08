@@ -26,6 +26,7 @@ export function useLoginForm() {
 
   // Fetch Request
   const fetchLoginRequest = async (account: FormFields) => {
+    console.log(`${API_HOST}/api/login`);
     const res = await fetch(`${API_HOST}/api/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
