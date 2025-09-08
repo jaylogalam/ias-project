@@ -58,9 +58,14 @@ export default function useSignupForm() {
       navigate("/");
     },
     onError: (err: any) => {
-      setError("username", {
-        message: err.message,
-      });
+      if (err.message === "Username already taken")
+        setError("username", {
+          message: err.message,
+        });
+      else {
+        alert("Something went wrong");
+        console.log(err);
+      }
     },
   });
 

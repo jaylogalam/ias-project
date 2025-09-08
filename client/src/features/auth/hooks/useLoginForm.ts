@@ -100,7 +100,8 @@ export function useLoginForm() {
           break;
 
         default:
-          console.log(err.message)
+          alert("Something went wrong")
+          console.log(err)
       }
     },
   });

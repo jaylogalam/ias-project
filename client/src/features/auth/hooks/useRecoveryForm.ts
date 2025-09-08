@@ -56,9 +56,14 @@ export default function useRecoveryForm() {
       navigate("/");
     },
     onError: (err: any) => {
-      setError("username", {
-        message: err.message,
-      });
+      if (err.message === "Username does not exist")
+        setError("username", {
+          message: err.message,
+        });
+      else {
+        alert("Something went wrong");
+        console.log(err);
+      }
     },
   });
 

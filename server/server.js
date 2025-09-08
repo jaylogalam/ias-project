@@ -4,7 +4,6 @@ import authRoutes from "./routes/authRoute.js";
 
 const PORT = process.env.PORT;
 const CLIENT_URL = process.env.CLIENT_URL
-console.log("Client URL", CLIENT_URL)
 
 const app = express();
 app.use(
