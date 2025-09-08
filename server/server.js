@@ -3,10 +3,12 @@ import cors from "cors";
 import authRoutes from "./routes/authRoute.js";
 
 const PORT = process.env.PORT;
+const CLIENT_URL = process.env.CLIENT_URL
+
 const app = express();
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: CLIENT_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
